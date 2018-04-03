@@ -1,0 +1,26 @@
+{
+  "name": "mycase",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "email": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "default": "user"
+    },
+    "birthday": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
