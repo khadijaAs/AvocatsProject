@@ -4,6 +4,7 @@ var dbconfig   = require('./config/database.config.js');
 var mongoose   = require('mongoose');
 
 const app = express();
+app.set('view engine', 'ejs');
 
 require('./app/routes/User.routes.js')(app);
 

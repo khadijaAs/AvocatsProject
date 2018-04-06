@@ -8,23 +8,24 @@ exports.create  = function(req,res){
         return res.status(400).send({message: "User can not be empty"});
     }*/
 
+console.log(req);
     var user = new User({
-    	email      : req.body.email,
-		Firstname  : req.body.Firstname,
-		LastName   : req.body.LastName,
-		Password   : req.body.Password,
-		Birthday   : req.body.Birthday,
-		CompanyName: req.body.CompanyName,
-		Website    : req.body.Website,
-		cellPhone  : req.body.cellPhone,
-		WorkPhone  : req.body.WorkPhone,
-		note       : req.body.note
-	});
+    	email      : req.body.email,//"khadija.asafar@gmail.com",//
+		Firstname  : req.body.Firstname,//"khadija",//
+		LastName   : req.body.LastName,//"asafar",//
+		Password   : req.body.Password,//"password",//
+		Birthday   : req.body.Birthday,//"01/01/1111",//
+		CompanyName: req.body.CompanyName,//"ensaKech",//
+		Website    : req.body.Website,//"www.Khadij@s.com",//
+		cellPhone  : req.body.cellPhone,//"66 66 66 66",//
+		WorkPhone  : req.body.WorkPhone,//"66 66 66 66",//
+		note       : req.body.note//"note"//
+    });
 
     user.save(function(err, data) {
         if(err) {
             console.log(err);
-            res.status(500).send({message: "Some error occurred while creating the User."});
+            res.status(500).send({messages: "Some error occurred while creating the User."});
         } else {
             res.send(data);
         }
@@ -39,7 +40,12 @@ exports.findAll = function(req, res) {
             res.status(500).send({message: "Some error occurred while retrieving users."});
         } else {
             //res.send(users);
-            res.render('../../views/users/index.ejs', {users : users});
+           // console.log(__dirname);
+            
+            //console.log(users);
+            res.render('../app/views/users/index', {
+                users : users
+            });
         }
     });
 
