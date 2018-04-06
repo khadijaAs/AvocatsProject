@@ -20,7 +20,11 @@
 	 						<tr>
 				 				<td><a href="/users/show/'<%= users[i]._id%>'"><%= users[i].email %></a></td>
 				 				<td><%= users[i].Firstname%></td>
-				 				<td><a href="#">Supprimer</a></td>
+				 				<td>
+				 					<form method="DELETE" action="/users/:'<%=users[i]._id%>'">
+				 						<input type="submit" value="delete" name="delete" />
+				 					</form>
+				 				</td>
 				 			</tr>
 	 					<%}%>
 	 				</tbody>

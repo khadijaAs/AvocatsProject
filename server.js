@@ -4,6 +4,9 @@ var dbconfig   = require('./config/database.config.js');
 var mongoose   = require('mongoose');
 
 const app = express();
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
 app.set('view engine', 'ejs');
 
 require('./app/routes/User.routes.js')(app);
@@ -24,8 +27,6 @@ mongoose.connection.once('open', function(){
 //create express app
 
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
 
 app.get('/', function(req,res){
 	res.json({"message": "welcome to CORDIGIX"});

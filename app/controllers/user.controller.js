@@ -8,8 +8,7 @@ exports.create  = function(req,res){
         return res.status(400).send({message: "User can not be empty"});
     }*/
 
-console.log(req);
-    var user = new User({
+var user = new User({
     	email      : req.body.email,//"khadija.asafar@gmail.com",//
 		Firstname  : req.body.Firstname,//"khadija",//
 		LastName   : req.body.LastName,//"asafar",//
@@ -55,11 +54,13 @@ exports.findOne = function(req, res) {
     // Find a single user with a userId
     // 
     // Find a single user with a userId
+  //  console.log("---------------------params.userId--------------:"req.params.userId);//+ObjectID());
     User.findById(req.params.userId, function(err, user) {
         if(err) {
             console.log(err);
             if(err.kind === 'ObjectId') {
-                return res.status(404).send({message: "user not found with id " + req.params.userId});                
+              //  var _id = mongoose.mongo.ObjectId(req.params.userId);
+                return res.status(404).send({message: "useer not found with id " + req.params.userId});                
             }
             return res.status(500).send({message: "Error retrieving user with id " + req.params.userId});
         } 
@@ -75,7 +76,8 @@ exports.findOne = function(req, res) {
 
 exports.update = function(req, res) {
     // Update a user identified by the userId in the request
-    
+    //console.log("---------------------params.userId--------------:"+req.params.userId);
+
     User.findById(req.params.userId, function(err,user) {
         if(err) {
             console.log(err);
@@ -113,17 +115,18 @@ exports.update = function(req, res) {
 
 exports.delete = function(req, res) {
     // Delete a user with the specified userId in the request
+    //console.log("---------------------params.userId--------------:"+req.params.userId);
     User.findByIdAndRemove(req.params.userId, function(err, user) {
         if(err) {
             console.log(err);
             if(err.kind === 'ObjectId') {
-                return res.status(404).send({message: "User not found with id " + req.params.userId});                
+                return res.status(404).send({message: "User not found with id " + req.params.userId + err});                
             }
-            return res.status(500).send({message: "Could not delete user with id " + req.params.userId});
+            return res.status(500).send({message: "Could not delete user with id " + req.params.userId + err});
         }
 
         if(!user) {
-            return res.status(404).send({message: "User not found with id " + req.params.userId});
+            return res.status(404).send({message: "User not found with id " + req.params.userId + err});
         }
 
         res.send({message: "User deleted successfully!"})
