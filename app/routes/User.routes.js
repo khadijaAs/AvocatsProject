@@ -14,7 +14,7 @@ module.exports  = function(app){
 	app.put('/users/:_id', users.update);
 
 	//delete a user with _id
-	app.del('/users/:_id', users.delete);
+	app.post('/users/:_id', users.delete);
 
 	//form to add new User
 	app.get('/addUser', function(req,res){

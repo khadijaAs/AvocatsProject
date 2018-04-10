@@ -2,10 +2,13 @@ const express  = require('express')
 var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
 var dbconfig   = require('./config/database.config.js');
+var methodOverride = require('method-override');
 
 const app = express();
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(methodOverride('_method'));
 
 app.set('view engine', 'ejs');
 
