@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
-var UserSchema = mongoose.Schema({
-//	_id: { type: UserSchema.ObjectId, auto: true },
-	_id: mongoose.Schema.Types.ObjectId,
+var Schema = mongoose.Schema;
+var UserSchema= new Schema({
+	_id        :  Schema.Types.ObjectId,
 	email      : String,
 	Firstname  : String,
 	LastName   : String,
@@ -18,5 +18,5 @@ var UserSchema = mongoose.Schema({
 	timestamps : true
 });
 
-var ObjectId = require('mongodb').ObjectID;
+//var ObjectId = require('mongodb').ObjectID;
 module.exports = mongoose.model('User', UserSchema);

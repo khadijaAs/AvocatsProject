@@ -1,7 +1,7 @@
 const express  = require('express')
 var bodyParser = require('body-parser');
-var dbconfig   = require('./config/database.config.js');
 var mongoose   = require('mongoose');
+var dbconfig   = require('./config/database.config.js');
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -12,8 +12,10 @@ app.set('view engine', 'ejs');
 require('./app/routes/User.routes.js')(app);
 
 
-mongoose.Promise = global.Promise;
 mongoose.connect(dbconfig.url);
+// Get Mongoose to use the global promise library
+mongoose.Promise = global.Promise;
+
 mongoose.connection.on('error', function(){
 	console.log('Could not connect to the databese. Exiting now....');
 	process.exit();
