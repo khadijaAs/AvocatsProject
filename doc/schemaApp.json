@@ -1,0 +1,241 @@
+User
+{	
+	"_id"           : "integer",
+	"email"         : "string",
+	"Firstname"     : "string",
+	"LastName"      : "string",
+	"Password"      : "string",
+	"Phone" : {
+		"cell"
+		"work"
+		"home"
+	},
+	"ProfilePicture": "string",
+	"address"       : "integer",//id of adress class
+	"address2"      : "integer",
+	"roles"			: [
+		"staff" // => [Attroney,Parlegal, Staff]
+		"client",
+		"Judge",
+		"expert",
+		"unassigned",
+		"Co-counsel",//id of adress class, ["user", "contact" ,"admin", "company"]  "user" => {'Judge', 'expert','unassigned','Co-consel','client'}
+	],
+//More Information
+	"Birthday"      : "Date",
+	"CompanyName"   : "string",
+	"Website"       : "string",
+	"note"          : "string",
+};
+
+
+Adresse
+{
+	"_id"           :  "integer",
+	"street"		:  "string",
+	"state"	        :  "string",
+	"city"	        :  "string",
+	"contry"	    :  "string",
+	"PostalCode" 	:  "string",
+	"Description"   :  "string"
+}
+
+
+Event 
+{
+	"_id"           :  "integer",
+	"relatedToCase" :  "Boolean",
+	"CaseId"		:  "integer", //if this event is not related to any case
+	"EventName"		:  "String", 
+	"DateDebut"     :  "Date",
+	"DateFin"       :  "Date",
+	"Location"      :  "integer", //adresseId
+	"Description"   :  "string",
+	"private"		:  "Boolean"
+	//"reminder"		:  "integer"  
+};
+
+Message
+{
+	"_id"           :  "integer",
+	"sendGlobalMessage" : "Boolean",
+	"private"		:  "Boolean",
+	"destinataireId":  "integer",
+	"expediteurId"  :  "integer",
+	"subject"       :  "string",
+	"body"          :  "string",
+	"caseId"		:  "integer",
+	"dateCreation"  :  "Date"
+}
+
+Case 
+{
+	"_id"           :  "integer",
+	"CaseName"		:  "String",
+	"CaseNumber"	:  "number",
+	"PracticeArea"  :  [ 
+		"Business", 
+		"Bankruptcy", 
+		"Civil", 
+		"Crimunal Defense", 
+		"Divorce/Separation", 
+		"DUI/DWI", 
+		"Employement", 
+		"Estate Planning", 
+		"Family", 
+		"Foreclosure", 
+		"Immigration", 
+		"Landlord/Tenault", 
+		"Personal Injury", 
+		"Real Estate", 
+		"Tax"
+	],
+	"DateOuverture" :  "Date",
+	"description"   :  "String",
+	"StatuteOfLimitation": "Date",
+	//...............
+}
+
+Document
+{
+	"_id"           : "integer",
+	"FoldeId"	    : "integer",
+	//the document will be added to this fir
+	"CaseId"        : "integer",  //case to share the doc with it will be automatically chared with this firm users linked to this case
+	"DocumentName"  : "String",
+	"AssignedDate"  : "Date",
+	"Description"   : "String",
+   // "Content"       : "String",
+    "Tags"          : "Liste of Strings",
+    "type"			: ["Template", "DocumentSimple"]
+}
+
+Case_User{
+	"CaseId" 		:  "integer",
+	"UserId"		:  "integer"
+}
+
+
+Folder
+{
+	"_id"           : "integer",
+	"FolderName"    : "String",
+	"CaseId"		: "integer"  //si ce doc n'est pas liee à aucune case il sera stocké dans le répertoire de la firm
+}
+
+Task
+{
+	"_id"           : "integer",
+	"Name"			: "String",
+	"CaseLink"      : "integer", //the task can be associeted to a particular case or no associeted to any case
+	"DueDate"		: "Date",
+	"priority"		: "number",//1, 2 or 3
+	"Description"	: "String",
+	"reminder"		: "",
+
+}
+
+User_Task{
+	"UserId"        : "integer",
+	"TaskId"		: "integer"
+}
+
+
+Note
+{
+	"_id"           : "integer",
+	"case"			: "integer", //id of the concerned case
+	"contact"		: "integer", //id of the concerned contact if it exist
+	"subject"		: "string",
+	"body"			: "string"
+
+}
+
+
+"/dashboard"
+"/appointement" //calendrier
+"/tasks"
+
+"/contacts/?" : [
+  "/contacts/clients",
+  "/contacts/companies"
+  "/contacts/contact_groups"
+]
+
+"/court_cases" : {
+	"show" : {//court_cases?show=closed
+		"open" //default one
+		"closed"
+}
+}
+
+"/documents"{
+	"/documents/firm_docs"
+	"/documents?show=templates"
+	"/documents?show=case&show_unread=all"
+	"/documents?show=case&show_unread=unread"
+}
+"/messages"
+{
+	"/messages#folder=inbox"
+	"/messages#folder=sent"
+	"/messages#folder=drafts"
+	"/messages#folder=archived"
+}
+
+"/account"  //MyProfile  update information addnewImage  divisé en des champs Myprofile, Email, Password, ProfilePicture
+"account/notifications" //choisir les notifications qu'un utilisateurs veut reçevoire
+
+
+
+HTTP :{
+	"GET" : [
+
+	//List OF
+       "/users",
+       "/cases",
+       "/documents",
+       "/messages",
+       "/tasks",
+       "/notes",
+
+    //Get 1 element
+    	"/users/:id"
+		"/tasks/:id",
+		"/notes/:id",
+		"/documents/:id",
+		"/adresses/:id",
+		"/case/:id",
+
+	],
+
+	"POST" : [
+		//creation
+		"/users/new",
+		"/tasks/new",
+		"/notes/new",
+		"/documents/new",
+		//"/addContact"
+		"/adresses/new",
+		"/case/new",
+
+	],
+
+	"PUT" : [
+	//update
+		"/users/:id"
+		"/tasks/:id",
+		"/notes/:id",
+		"/documents/:id",
+		"/adresses/:id",
+		"/case/:id",
+	],
+	"DELETE" : [
+		"/users/:id",
+		"/tasks/:id",
+		"/notes/:id",
+		"/documents/:id",
+		"/adresses/:id",
+		"/case/:id",
+	]
+}
