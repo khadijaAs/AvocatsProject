@@ -21,8 +21,13 @@
 				 				<td><a href="/users/show/'<%= users[i].email%>'"><%= users[i].email %></a></td>
 				 				<td><%= users[i].Firstname%></td>
 				 				<td>
-				 					<form method="post" action="/users/?_id='<%=users[i]._id%>'">
-				 						<input type="hidden" name="_method" value="delete" />
+				 						<!--%
+				 							const {URL} = require('url');
+				 							const myUrl= new URL ('localhost:3000/users/');
+				 							myUrl.searchParams.set('_id', )
+				 						%-->
+				 					<form method="post" action="/users?_id='<%=users[i]._id%>'">
+				 						<!--input type="hidden" name="_method" value="delete" /-->
 				 						<input type="submit" value="delete" name="delete" />
 				 					</form>
 				 				</td>
