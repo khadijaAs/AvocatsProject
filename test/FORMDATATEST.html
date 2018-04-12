@@ -1,0 +1,21 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <button onclick='send()'>Send</button>
+        <script>
+          var send = function() {
+            var request = new XMLHttpRequest();
+            // POST to httpbin which returns the POST data as JSON
+            request.open('POST', 'https://httpbin.org/post', /* async = */ false);
+
+            var formData = new FormData();
+            formData.append('key1', 'value1');
+            formData.append('key2', 'value2');
+
+            request.send(formData);
+            console.log(request.response);
+          };
+        </script>
+    </body>
+</html>
