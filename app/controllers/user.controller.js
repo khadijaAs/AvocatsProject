@@ -1,5 +1,8 @@
 var User = require('../models/user.model.js');
 var mongoose   = require('mongoose');
+var bcrypt      = require('bcrypt-nodejs');
+const SALT_WORK_FACTOR = 10;
+const DEFAULT_USER_PICTURE = "/img/user.jpg";
 
 exports.create  = function(req,res){
 	//create and save new User
@@ -21,6 +24,34 @@ var user = new User({
 		WorkPhone  : req.body.WorkPhone,//"66 66 66 66",//
 		note       : req.body.note//"note"//
     });
+    
+    user.pre('save', function(next) {
+    var user = this;
+
+    // ensure user picture is set
+   /* 
+    if(!user.picture){
+        user.picture = DEFAULT_USER_PICTURE;
+    } */
+
+    // only hash the password if it has been modified (or is new)
+    //if (!user.isModified('password')) return next();
+
+    // generate a salt
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if (err) return next(err);
+
+        // hash the password using our new salt
+        bcrypt.hash(user.password, salt, null, function(err, hash) {
+            if (err) return next(err);
+
+            // override the cleartext password with the hashed one
+            user.password = hash;
+            next();
+        });
+    });
+    });
+
 
     user.save(function(err, data) {
         if(err) {
@@ -53,14 +84,14 @@ exports.findAll = function(req, res) {
 
 exports.findOne = function(req, res) {
     
-    User.findOne(req.params._id, function(err,user){//req.params._id, function(err, user) {
+    User.findOne(mongoose.Schema.Types.ObjectId(req.params._id), function(err,user){//req.params._id, function(err, user) {
      // console.log(user);
         if(err) {
             if(err.kind === 'ObjectId') {
              
                 return res.send(err);                
             }
-            return res.status(500).send({message: "Error retrieving user with id " + req.params._id});
+            return res.status(500).send({message: "Error retrieving user with id " + req.params._id + "  "+err});
         } 
 
         if(!user) {
@@ -73,7 +104,7 @@ exports.findOne = function(req, res) {
 
 };
 
-exports.update = function(req, res) {
+/*exports.update = function(req, res) {
     // Update a user identified by the _id in the request
     //console.log("---------------------params._id--------------:"+req.params._id);
 
@@ -81,13 +112,13 @@ exports.update = function(req, res) {
         if(err) {
             console.log(err);
             if(err.kind === 'ObjectId') {
-                return res.status(404).send({message: "User not found with id " + req.params._id});                
+                return res.status(404).send({message: "User not found with id 1" + req.params._id});                
             }
             return res.status(500).send({message: "Error finding user with id " + req.params._id});
         }
 
         if(!user) {
-            return res.status(404).send({message: "User not found with id " + req.params._id});            
+            return res.status(404).send({message: "User not found with id 2" + req.params._id});            
         }
 
         email      = req.body.email;
@@ -110,22 +141,22 @@ exports.update = function(req, res) {
         });
     });
 
-};
+};*/
 
 exports.delete = function(req, res) {
     // Delete a user with the specified _id in the request
     //console.log("---------------------params._id--------------:"+req.params._id);
-    User.findByIdAndRemove(req.params._id, function(err, user) {
+    User.findOneAndRemove(mongoose.Schema.Types.ObjectId(req.params._id), function(err, user) {
         if(err) {
             console.log(err);
             if(err.kind === 'ObjectId') {
-                return res.status(404).send({message: "User not found with id " + req.params._id + err});                
+                return res.status(404).send({message: "User not found with id 3" + req.params._id });                
             }
             return res.status(500).send({message: "Could not delete user with id " + req.params._id + err});
         }
 
         if(!user) {
-            return res.status(404).send({message: "User not found with id " + req.params._id + err});
+            return res.status(404).send({message: "User not found with id 4" + req.params._id + err});
         }
 
         res.send({message: "User deleted successfully!"})

@@ -26,7 +26,8 @@
 				 							const myUrl= new URL ('localhost:3000/users/');
 				 							myUrl.searchParams.set('_id', )
 				 						%-->
-				 					<form method="post" action="/users?_id='<%=users[i]._id%>'">
+				 					<form method="post" action="/users/'<%=users[i]._id%>'">
+				 						<!--input type="hidden" name="_id" value='<%=users[i]._id%>' /-->
 				 						<!--input type="hidden" name="_method" value="delete" /-->
 				 						<input type="submit" value="delete" name="delete" />
 				 					</form>

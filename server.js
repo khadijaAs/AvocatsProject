@@ -37,6 +37,15 @@ app.get('/', function(req,res){
 	res.json({"message": "welcome to CORDIGIX"});
 })
 
-app.listen(3000, function() {
+app.listen(8080, function() {
   console.log('listening on 3000')
 })
+var FormData = require('form-data');
+
+var form = new FormData();
+form.submit('./app/views/users/test', function(err,res){
+
+	if(err) console.log("errors");//throw err;
+	else
+	console.log('Done')
+});

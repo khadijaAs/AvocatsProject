@@ -152,6 +152,15 @@ Note
 }
 
 
+Invoice
+{
+		"_id"		:	"integer",
+	"InvoiceDate"	:	"integer",
+	"PayementTerms" : "string", //{DueDate, net15, net 30, net 60, due on reciep}
+	"TermsAndConditions" : "string",
+	"Notes"			:	 "string"
+}
+
 "/dashboard"
 "/appointement" //calendrier
 "/tasks"
@@ -186,6 +195,12 @@ Note
 "/account"  //MyProfile  update information addnewImage  divisé en des champs Myprofile, Email, Password, ProfilePicture
 "account/notifications" //choisir les notifications qu'un utilisateurs veut reçevoire
 
+/signIn
+client/signIn
+user/signIn
+
+
+/signOut
 
 
 HTTP :{
@@ -229,6 +244,8 @@ HTTP :{
 		"/documents/:id",
 		"/adresses/:id",
 		"/case/:id",
+
+		//"/users/:id=?/"
 	],
 	"DELETE" : [
 		"/users/:id",
@@ -238,4 +255,11 @@ HTTP :{
 		"/adresses/:id",
 		"/case/:id",
 	]
+}
+
+
+Dossier d'un utilsateur{
+	documents,
+	templates,
+	pictures,
 }
