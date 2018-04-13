@@ -5,7 +5,7 @@ var dbconfig   = require('./config/database.config.js');
 var methodOverride = require('method-override');
 
 const app = express();
-
+//"^4.13.12"
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
@@ -37,7 +37,7 @@ app.get('/', function(req,res){
 	res.json({"message": "welcome to CORDIGIX"});
 })
 
-app.listen(8080, function() {
+app.listen(3000, function() {
   console.log('listening on 3000')
 })
 var FormData = require('form-data');

@@ -11,7 +11,7 @@ module.exports  = function(app){
 	app.get('/users/:_id', users.findOne);
 
 	//Update a User with UserId
-	//app.post('/users/:_id', users.update);
+	app.post('/users/:_id/update', users.update);
 
 	//delete a user with _id
 	app.post('/users/:_id', users.delete);// users/ase521rde      ?p=jk&p2=vbhn
